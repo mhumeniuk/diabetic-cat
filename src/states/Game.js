@@ -1,10 +1,13 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
-
+import Cat from '../sprites/Cat'
+let sky;
 export default class extends Phaser.State {
   init () {}
-  preload () {}
+  preload () {
+    this.game.load.image('sky', '/assets/images/background.png');
+    this.game.load.image('cat', '/assets/images/the-hero.png');
+  }
 
   create () {
     const bannerText = 'Phaser + ES6 + Webpack'
@@ -15,20 +18,24 @@ export default class extends Phaser.State {
     banner.fill = '#77BFA3'
     banner.smoothed = false
     banner.anchor.setTo(0.5)
-
-    this.mushroom = new Mushroom({
+    sky = this.game.add.tileSprite(0, 0, 768, 1024, 'sky');
+    this.cat = new Cat({
       game: this,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom'
+      asset: 'cat'
     })
 
-    this.game.add.existing(this.mushroom)
+    this.game.add.existing(this.cat)
+  }
+
+  update() {
+    sky.tilePosition.y += 2
   }
 
   render () {
     if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
+      this.game.debug.spriteInfo(this.cat, 120, 147)
     }
   }
 }

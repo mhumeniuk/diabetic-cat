@@ -3,3 +3,7 @@ export const centerGameObjects = (objects) => {
     object.anchor.setTo(0.5)
   })
 }
+
+export const getRandom = (a, b) => {
+ return Math.floor((Math.random() * b) + a);
+}

@@ -5,9 +5,14 @@ import Candy from '../sprites/Candy'
 import { getRandom } from '../utils';
 import config from '../config'
 
-let sky, cursors;
-
 export default class extends Phaser.State {
+
+  constructor() {
+    super();
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
+
   init () {}
   preload () {
     this.game.load.image('sky', '/assets/images/background.png');
@@ -39,22 +44,24 @@ export default class extends Phaser.State {
          y: this.world.centerY - 500,
          asset: 'candy',
          stepWidth
-      })
-      this.game.add.existing(candy)
-      setTimeout(() => {candy.destroy()} ,7000)  
+      });
+      this.game.add.existing(candy);
+      setTimeout(() => {candy.destroy()}, 7000);  
     }
 
-    this.game.add.existing(this.cat)
+    this.sky = this.game.add.tileSprite(0, 0, 768, 1024, 'sky');
+
+    this.game.add.existing(this.cat);
     this.game.time.advancedTiming = true;
 
     game.input.onTap.add(this.cat.moveBody, this);
-    setInterval(createCandy, 500) 
-
-    sky = this.game.add.tileSprite(0, 0, 768, 1024, 'sky');
+    setInterval(createCandy, 1000);
   }
 
   update() {
-    sky.tilePosition.y +=30
+    if (typeof this.sky !== 'undefined') {
+      this.sky.tilePosition.y +=30;
+    }
   }
 
   render () {
